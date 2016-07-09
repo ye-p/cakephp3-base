@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="sample" default="build">
   <property name="basedir" value="${phing.dir}" />
-  <property name="appdir"  value="${basedir}/application" />
+  <property name="appdir"  value="${basedir}/src" />
   <property name="datadir" value="${basedir}/data" />
   <property name="logdir"  value="${datadir}/build/logs" />
-  <target name="build" depends="clean,prepare,phpcs,phpmd,phpcpd,phpdoc">
+  <target name="build" depends="clean,prepare,phpmd,phpcpd,phpdoc">
   </target>
   <target name="clean" description="clean">
     <delete dir="${logdir}" />
@@ -13,11 +13,6 @@
   <target name="prepare" description="prepare">
     <mkdir dir="${logdir}" />
     <mkdir dir="${datadir}/build/phpdoc" />
-  </target>
-  <target name="phpcs" description="PHPCS">
-    <phpcodesniffer standard="Zend" file="${appdir}/" allowedFileExtensions="php">
-      <formatter type="checkstyle" outfile="${logdir}/phpcs.xml" />
-    </phpcodesniffer>
   </target>
   <target name="phpmd" description="PHPMD">
     <exec dir="${basedir}" executable="phpmd" output="${logdir}/phpmd.log">
