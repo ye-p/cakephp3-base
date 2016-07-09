@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="phingtest" default="build">
+<project name="sample" default="build">
   <property name="basedir" value="${phing.dir}" />
   <property name="appdir"  value="${basedir}/application" />
   <property name="datadir" value="${basedir}/data" />
