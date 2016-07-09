@@ -4,7 +4,7 @@
   <property name="appdir"  value="${basedir}/application" />
   <property name="datadir" value="${basedir}/data" />
   <property name="logdir"  value="${datadir}/build/logs" />
-  <target name="build" depends="clean,prepare,phpcs,phpmd,phpcpd,phpdoc,phpunit">
+  <target name="build" depends="clean,prepare,phpcs,phpmd,phpcpd,phpdoc">
   </target>
   <target name="clean" description="clean">
     <delete dir="${logdir}" />
