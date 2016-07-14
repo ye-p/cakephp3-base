@@ -420,15 +420,12 @@ class FormHelper extends Helper
         $htmlAttributes += $options;
 
         $this->fields = [];
-        if ($this->requestType !== 'get') {
+        //if ($this->requestType !== 'get') {
             $append .= $this->_csrfField();
-        }
+        //}
 
         if (!empty($append)) {
             $append = $templater->format('hiddenBlock', ['content' => $append]);
-        //Getの場合URLパラメータにtoken付与
-        } else {
-            $action .= '?_csrfToken=' . $this->request->params['_csrfToken'];
         }
 
         $actionAttr = $templater->formatAttributes(['action' => $action, 'escape' => false]);

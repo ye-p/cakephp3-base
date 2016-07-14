@@ -41,6 +41,23 @@ class RootController extends AppController
         $this->session = $this->request->session();
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Csrf', [
+            'exclusion' => [
+                [
+                    'controller' => 'Top',
+                    'action' => [
+                        'index',
+                    ]
+                ],
+                [
+                    'controller' => 'Menu',
+                    'action' => [
+                        'index',
+                        'logout',
+                    ]
+                ],
+            ]
+        ]);
 
         $this->loadComponent('Auth', [
             'authenticate' => [

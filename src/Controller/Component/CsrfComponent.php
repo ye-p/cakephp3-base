@@ -89,13 +89,20 @@ class CsrfComponent extends Component
         if ($request->is('requested')) {
             return;
         }
-//pr($request->query);
-        if ($request->is('get') && $cookieData === null) {
+
+        //画面表示毎にtokenをセット
+        //if ($request->is('get') && $cookieData === null) {
             $this->_setCookie($request, $response);
-        }
-        if ($request->is(['put', 'post', 'delete', 'patch']) || !empty($request->data)) {
-            $this->_validateToken($request);
-            unset($request->data[$this->_config['field']]);
+        //}
+
+        if($this->check()){
+            if($request->is('get')){
+                $this->_validateToken($request,$isGet = true);
+            }
+            if ($request->is(['put', 'post', 'delete', 'patch']) || !empty($request->data)) {
+                $this->_validateToken($request);
+                unset($request->data[$this->_config['field']]);
+            }
         }
     }
 
@@ -144,18 +151,55 @@ class CsrfComponent extends Component
      * @throws \Cake\Network\Exception\InvalidCsrfTokenException when the CSRF token is invalid or missing.
      * @return void
      */
-    protected function _validateToken(Request $request)
+    protected function _validateToken(Request $request, $isGet = false)
     {
         $cookie = $request->cookie($this->_config['cookieName']);
         $post = $request->data($this->_config['field']);
+        $get = $request->query($this->_config['field']);
         $header = $request->header('X-CSRF-Token');
 
         if (empty($cookie)) {
             throw new InvalidCsrfTokenException(__d('cake', 'Missing CSRF token cookie'));
         }
 
-        if ($post !== $cookie && $header !== $cookie) {
-            throw new InvalidCsrfTokenException(__d('cake', 'CSRF token mismatch.'));
+        if($isGet){
+
+            if ($get !== $cookie && $header !== $cookie) {
+                throw new InvalidCsrfTokenException(__d('cake', 'CSRF token mismatch.'));
+            }
+
+        } else {
+
+            if ($post !== $cookie && $header !== $cookie) {
+                throw new InvalidCsrfTokenException(__d('cake', 'CSRF token mismatch.'));
+            }
+
+            $post = $request->data($this->_config['field']);
         }
+
+    }
+
+    /**
+     * csrfトークンのチェックを行うか確認
+     *
+     * @return boolean 行う=>true,行わない=>false
+     */
+    protected function check(){
+        $ret = true;
+        $controllerName = $this->request->controller;
+        $action = $this->request->action;
+
+        foreach($this->_config['exclusion'] as $opt){
+            if($controllerName == $opt['controller']){
+                foreach ($opt['action'] as $checkAct) {
+                    if($action == $checkAct){
+                        $ret = false;
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        return $ret;
     }
 }
