@@ -228,7 +228,7 @@ return [
             //'port' => 'non_standard_port_number',
             'username' => 'root',
             'password' => 'root',
-            'database' => 'looop_highv',
+            'database' => 'looop_rj',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

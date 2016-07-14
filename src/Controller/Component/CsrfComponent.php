@@ -89,7 +89,7 @@ class CsrfComponent extends Component
         if ($request->is('requested')) {
             return;
         }
-pr($request->query);
+//pr($request->query);
         if ($request->is('get') && $cookieData === null) {
             $this->_setCookie($request, $response);
         }

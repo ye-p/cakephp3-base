@@ -49,8 +49,7 @@ class RootController extends AppController
                         'hashType' => 'sha256',
                         'className' => 'Custom'
                     ],
-                    'database' => 'demand',
-                    'userModel' => 'DemandUsers',
+                    'userModel' => 'Users',
                     'fields' => [
                         'username' => 'login_id',
                         'password' => 'password'

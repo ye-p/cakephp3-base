@@ -1,18 +1,18 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\DemandUser;
+use App\Model\Entity\User;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * DemandUsers Model
+ * Users Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Logins
  */
-class DemandUsersTable extends Table
+class UsersTable extends Table
 {
 
     /**
@@ -25,14 +25,15 @@ class DemandUsersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('demand_users');
+        $this->table('users');
         $this->displayField('name');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Logins', [
-            'foreignKey' => 'login_id'
+            'foreignKey' => 'login_id',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -49,43 +50,12 @@ class DemandUsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('zip');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         $validator
-            ->allowEmpty('prefecture');
-
-        $validator
-            ->allowEmpty('city');
-
-        $validator
-            ->allowEmpty('address_1');
-
-        $validator
-            ->allowEmpty('address_2');
-
-        $validator
-            ->allowEmpty('name');
-
-        $validator
-            ->allowEmpty('name_kana');
-
-        $validator
-            ->integer('tel_type')
-            ->allowEmpty('tel_type');
-
-        $validator
-            ->allowEmpty('tel');
-
-        $validator
-            ->email('email')
-            ->allowEmpty('email');
-
-        $validator
-            ->allowEmpty('password');
-
-        $validator
-            ->boolean('edit_flag')
-            ->allowEmpty('edit_flag');
+            ->requirePresence('password', 'create')
+            ->notEmpty('password');
 
         $validator
             ->boolean('deleted')
@@ -96,11 +66,8 @@ class DemandUsersTable extends Table
             ->allowEmpty('deleted_date');
 
         $validator
-            ->boolean('mail_authenticate_flag')
-            ->allowEmpty('mail_authenticate_flag');
-
-        $validator
-            ->allowEmpty('tmp_pw');
+            ->dateTime('logined')
+            ->allowEmpty('logined');
 
         return $validator;
     }
@@ -114,7 +81,6 @@ class DemandUsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['login_id'], 'Logins'));
         return $rules;
     }
