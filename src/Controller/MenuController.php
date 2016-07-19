@@ -15,8 +15,10 @@
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Static content controller
@@ -28,18 +30,33 @@ use Cake\View\Exception\MissingTemplateException;
 class MenuController extends RootController
 {
 
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadComponent('Csrf');
-    }
-
     public function index()
     {
     }
 
     public function next()
     {
+        if($this->request->is('post')){
+            // トランザクション開始
+            $connection = ConnectionManager::get('default');
+            $connection->begin();
+            $Users = TableRegistry::get('Users');
+            $user = $Users->find()->first();
+            $user = $Users->patchEntity($user, $this->request->data);
+
+            if ($Users->save($user)) {
+                $this->Flash->success('The user has been saved.');
+                // コミット
+                $connection->commit();
+                $this->render('complete');
+            } else {
+                // バリデーションエラー表示
+                debug($user->errors());
+                $this->Flash->error('The user could not be saved. Please, try again.');
+                // ロールバック
+                $connection->rollback();
+            }
+        }
     }
+
 }

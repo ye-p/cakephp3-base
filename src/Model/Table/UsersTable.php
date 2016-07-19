@@ -6,6 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use App\Model\Validation;
 
 /**
  * Users Model
@@ -45,17 +46,30 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator->provider('ProviderKey', 'App\Model\Validation\CustomValidation');
+
+        $notPassword = function ($context) {return !empty($context['data']['password']);};
+        $notLoginId = function ($context) {return !empty($context['data']['login_id']);};
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->notEmpty('name')
+            ->add('name', 'ruleName', [
+                'rule' => ['alphaNumericCustom'],
+                'provider' => 'ProviderKey',
+                'message' => '名前は半角英数字で入力してください。']
+            );
 
         $validator
-            ->requirePresence('password', 'create')
+            ->requirePresence('password', $notPassword)
             ->notEmpty('password');
+
+        $validator
+            ->requirePresence('login_id', $notLoginId)
+            ->notEmpty('login_id');
 
         $validator
             ->boolean('deleted')
@@ -81,7 +95,6 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['login_id'], 'Logins'));
         return $rules;
     }
 }
