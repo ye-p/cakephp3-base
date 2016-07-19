@@ -9,5 +9,3 @@ CREATE TABLE users (
 	created datetime,
 	updated datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO users (name,login_id,password,created) VALUES ('テスト太郎','j3ns6','edc6e3fc925cff497471f4b4b66616dae8f1bc475ccefb18af01422bc65db528',NOW());

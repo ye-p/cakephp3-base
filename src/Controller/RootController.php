@@ -47,7 +47,6 @@ class RootController extends AppController
             'authenticate' => [
                 'Form' => [
                     'passwordHasher' => [
-                        'hashType' => 'sha256',
                         'className' => 'Custom'
                     ],
                     'userModel' => 'Users',

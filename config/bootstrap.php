@@ -219,3 +219,5 @@ Type::build('date')
     ->useImmutable();
 Type::build('datetime')
     ->useImmutable();
+
+require __DIR__ . '/const.php';
