@@ -28,7 +28,7 @@ use Cake\View\Exception\MissingTemplateException;
 class TopController extends RootController
 {
 
-    public function index()
+    public function login()
     {
         //ログインセッションがある場合はリダイレクト
         if($this->Auth->user()){

@@ -7,12 +7,12 @@ namespace Composer\Autoload;
 class ComposerStaticInit327babce782b14ac086524f07954ac69
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '34122c0574b76bf21c9a8db62b5b9cf3' => __DIR__ . '/..' . '/cakephp/chronos/src/carbon_compat.php',
         'c720f792236cd163ece8049879166850' => __DIR__ . '/..' . '/cakephp/cakephp/src/Core/functions.php',
         'ede59e3a405fb689cd1cebb7bb1db3fb' => __DIR__ . '/..' . '/cakephp/cakephp/src/Collection/functions.php',
         '90236b492da7ca2983a2ad6e33e4152e' => __DIR__ . '/..' . '/cakephp/cakephp/src/I18n/functions.php',
         'b1fc73705e1bec51cd2b20a32cf1c60a' => __DIR__ . '/..' . '/cakephp/cakephp/src/Utility/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
     );
@@ -41,6 +41,10 @@ class ComposerStaticInit327babce782b14ac086524f07954ac69
         array (
             'Migrations\\' => 11,
         ),
+        'J' => 
+        array (
+            'JcPires\\AclManager\\' => 19,
+        ),
         'D' => 
         array (
             'DebugKit\\Test\\Fixture\\' => 22,
@@ -62,6 +66,7 @@ class ComposerStaticInit327babce782b14ac086524f07954ac69
             'Aura\\Intl\\_Config\\' => 18,
             'App\\Test\\' => 9,
             'App\\' => 4,
+            'Acl\\' => 4,
         ),
     );
 
@@ -110,6 +115,10 @@ class ComposerStaticInit327babce782b14ac086524f07954ac69
         array (
             0 => __DIR__ . '/..' . '/cakephp/migrations/src',
         ),
+        'JcPires\\AclManager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jcpires/cakephp3-aclmanager/src',
+        ),
         'DebugKit\\Test\\Fixture\\' => 
         array (
             0 => __DIR__ . '/..' . '/cakephp/debug_kit/tests/Fixture',
@@ -149,6 +158,10 @@ class ComposerStaticInit327babce782b14ac086524f07954ac69
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Acl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cakephp/acl/src',
         ),
     );
 

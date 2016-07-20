@@ -13,9 +13,13 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$propertyHintMap = null;
-if (!empty($propertySchema)) {
-    $propertyHintMap = $this->DocBlock->buildEntityPropertyHintTypeMap($propertySchema);
+$propertyHintMap = $this->DocBlock->buildEntityPropertyHintTypeMap(isset($propertySchema) ? $propertySchema : []);
+$associationHintMap = $this->DocBlock->buildEntityAssociationHintTypeMap(isset($propertySchema) ? $propertySchema : []);
+
+$annotations = $this->DocBlock->propertyHints($propertyHintMap);
+if(!empty($associationHintMap)) {
+    $annotations[] = "";
+    $annotations = array_merge($annotations, $this->DocBlock->propertyHints($associationHintMap));
 }
 
 $accessible = [];
@@ -37,21 +41,8 @@ namespace <?= $namespace ?>\Model\Entity;
 
 use Cake\ORM\Entity;
 
-/**
- * <?= $name ?> Entity.
-<?php if ($propertyHintMap): ?>
- *
-<?php foreach ($propertyHintMap as $property => $type): ?>
-<?php if ($type): ?>
- * @property <?= $type ?> $<?= $property ?>
+<?= $this->DocBlock->classDescription($name, 'Entity', $annotations) ?>
 
-<?php else: ?>
- * @property $<?= $property ?>
-
-<?php endif; ?>
-<?php endforeach; ?>
-<?php endif; ?>
- */
 class <?= $name ?> extends Entity
 {
 <?php if (!empty($accessible)): ?>
@@ -65,16 +56,12 @@ class <?= $name ?> extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
-<?php foreach ($accessible as $field => $value): ?>
-        '<?= $field ?>' => <?= $value ?>,
-<?php endforeach; ?>
-    ];
+    protected $_accessible = [<?= $this->Bake->stringifyList($accessible, ['quotes' => false]) ?>];
 <?php endif ?>
 <?php if (!empty($hidden)): ?>
 
     /**
-     * Fields that are excluded from JSON an array versions of the entity.
+     * Fields that are excluded from JSON versions of the entity.
      *
      * @var array
      */

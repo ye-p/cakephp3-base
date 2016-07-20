@@ -13,13 +13,30 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Utility\Inflector;
+
+$annotations = [];
+foreach ($associations as $type => $assocs) {
+    foreach ($assocs as $assoc) {
+        $typeStr = Inflector::camelize($type);
+        $annotations[] = "@property \Cake\ORM\Association\\{$typeStr} \${$assoc['alias']}";
+    }
+}
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity} get(\$primaryKey, \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity} newEntity(\$data = null, array \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity}[] newEntities(array \$data, array \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity}|bool save(\\Cake\\Datasource\\EntityInterface \$entity, \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity} patchEntity(\\Cake\\Datasource\\EntityInterface \$entity, array \$data, array \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity}[] patchEntities(\$entities, array \$data, array \$options = [])";
+$annotations[] = "@method \\{$namespace}\\Model\\Entity\\{$entity} findOrCreate(\$search, callable \$callback = null)";
+foreach ($behaviors as $behavior => $behaviorData) {
+    $annotations[] = "@mixin \Cake\ORM\Behavior\\{$behavior}Behavior";
+}
 ?>
 <CakePHPBakeOpenTagphp
 namespace <?= $namespace ?>\Model\Table;
 
 <?php
 $uses = [
-    "use $namespace\\Model\\Entity\\$entity;",
     'use Cake\ORM\Query;',
     'use Cake\ORM\RulesChecker;',
     'use Cake\ORM\Table;',
@@ -30,18 +47,8 @@ echo implode("\n", $uses);
 ?>
 
 
-/**
- * <?= $name ?> Model
-<?php if ($associations): ?>
- *
-<?php foreach ($associations as $type => $assocs): ?>
-<?php foreach ($assocs as $assoc): ?>
- * @property \Cake\ORM\Association\<?= Inflector::camelize($type) ?> $<?= $assoc['alias'] ?>
+<?= $this->DocBlock->classDescription($name, 'Model', $annotations) ?>
 
-<?php endforeach ?>
-<?php endforeach; ?>
-<?php endif; ?>
- */
 class <?= $name ?>Table extends Table
 {
 
@@ -168,6 +175,7 @@ endforeach;
 <?php foreach ($rulesChecker as $field => $rule): ?>
         $rules->add($rules-><?= $rule['name'] ?>(['<?= $field ?>']<?= !empty($rule['extra']) ? ", '$rule[extra]'" : '' ?>));
 <?php endforeach; ?>
+
         return $rules;
     }
 <?php endif; ?>

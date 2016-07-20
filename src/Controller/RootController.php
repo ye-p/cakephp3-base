@@ -14,6 +14,10 @@
  */
 namespace App\Controller;
 
+use Cake\Controller\ComponentRegistry;
+use Acl\Controller\Component\AclComponent;
+use Cake\Event\Event;
+
 /**
  * Application Controller
  *
@@ -42,7 +46,7 @@ class RootController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Csrf');
-
+        $this->loadComponent('Acl.Acl');
         $this->loadComponent('Auth', [
             'authenticate' => [
                 'Form' => [
@@ -58,19 +62,37 @@ class RootController extends AppController
             ],
             'loginAction' => [
                 'controller' => 'Top',
-                'action' => 'index'
+                'action' => 'login'
             ],
             'loginRedirect' => [
                 'controller' => 'Menu',
                 'action' => 'index'
-            ]
+            ],
+            'authorize' => 'Controller',
+            'unauthorizedRedirect' => false,
+            'authError' => 'アクセス権限がありません',
         ]);
+    }
+
+    public function isAuthorized($user)
+    {
+        $Collection = new ComponentRegistry();
+        $acl = new AclComponent($Collection);
+        $controller = $this->request->controller;
+        $action     = $this->request->action;
+        return $acl->check(['Users' => ['id' => $user['id']]], "$controller/$action");
     }
 
     public function logout()
     {
         $this->request->session()->destroy();
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        //ACLのチェックを行わない関数
+        $this->Auth->allow(['login','logout']);
     }
 
 }

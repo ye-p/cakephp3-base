@@ -36,6 +36,7 @@ class UsersTable extends Table
             'foreignKey' => 'login_id',
             'joinType' => 'INNER'
         ]);
+        $this->addBehavior('Acl.Acl', ['type' => 'requester']);
     }
 
     /**

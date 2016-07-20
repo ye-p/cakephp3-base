@@ -221,3 +221,5 @@ Type::build('datetime')
     ->useImmutable();
 
 require __DIR__ . '/const.php';
+
+Plugin::load('Acl', ['bootstrap' => true]);

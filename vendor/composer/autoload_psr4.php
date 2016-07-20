@@ -17,6 +17,7 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Phinx\\' => array($vendorDir . '/robmorgan/phinx/src/Phinx'),
     'Migrations\\' => array($vendorDir . '/cakephp/migrations/src'),
+    'JcPires\\AclManager\\' => array($vendorDir . '/jcpires/cakephp3-aclmanager/src'),
     'DebugKit\\Test\\Fixture\\' => array($vendorDir . '/cakephp/debug_kit/tests/Fixture'),
     'DebugKit\\' => array($vendorDir . '/cakephp/debug_kit/src'),
     'Cake\\Test\\' => array($vendorDir . '/cakephp/cakephp/tests'),
@@ -27,4 +28,5 @@ return array(
     'Aura\\Intl\\_Config\\' => array($vendorDir . '/aura/intl/config'),
     'App\\Test\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
+    'Acl\\' => array($vendorDir . '/cakephp/acl/src'),
 );
