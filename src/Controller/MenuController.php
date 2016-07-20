@@ -30,6 +30,8 @@ use Cake\Datasource\ConnectionManager;
 class MenuController extends RootController
 {
 
+    public $components = ['Mail'];
+
     public function index()
     {
     }
@@ -59,4 +61,9 @@ class MenuController extends RootController
         }
     }
 
+    public function mail(){
+        $this->Mail->send($this->Auth->user());
+        $this->Flash->success('mail sent');
+        $this->render('complete');
+    }
 }
