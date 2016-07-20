@@ -2,13 +2,13 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
+
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends RootController
+class UsersController extends AppController
 {
 
     /**
@@ -18,6 +18,9 @@ class UsersController extends RootController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Groups']
+        ];
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -33,7 +36,9 @@ class UsersController extends RootController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($id, [
+            'contain' => ['Groups', 'Aros']
+        ]);
 
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -57,8 +62,8 @@ class UsersController extends RootController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $logins = $this->Users->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'logins'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'groups'));
         $this->set('_serialize', ['user']);
     }
 
@@ -84,8 +89,8 @@ class UsersController extends RootController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $logins = $this->Users->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'logins'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'groups'));
         $this->set('_serialize', ['user']);
     }
 

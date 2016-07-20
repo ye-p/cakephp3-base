@@ -35,7 +35,9 @@ INSERT INTO aros (model,foreign_key,lft,rght) VALUES ('Groups', (select id from 
 INSERT INTO aros (model,foreign_key,parent_id,lft,rght) VALUES ('Users', (select id from users where username = 'サブ管理者さん'), (select id from aros as tmp where foreign_key in (select id from groups where name = 'サブ管理者') and model = 'Groups'), 7, 8);
 
 
-#INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from groups where name = 'スーパー管理者') and model = 'Groups'),(select id from acos where alias = 'App'),1,1,1,1);
+INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from groups where name = 'スーパー管理者') and model = 'Groups'),(select id from acos where alias = 'App'),1,1,1,1);
 INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from users where username = 'スーパー管理者さん') and model = 'Users'),(select id from acos where alias = 'App'),1,1,1,1);
-#INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from groups where name = 'サブ管理者') and model = 'Groups'),(select id from acos where alias = 'App'),'-1','-1','-1','-1');
-INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from users where username = 'サブ管理者さん') and model = 'Users'),(select id from acos where alias = 'App'),'-1','-1','-1','-1');
+INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from groups where name = 'サブ管理者') and model = 'Groups'),(select id from acos where alias = 'Menu'),1,1,1,1);
+INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from groups where name = 'サブ管理者') and model = 'Groups'),(select id from acos where alias = 'next'),'-1','-1','-1','-1');
+INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from users where username = 'サブ管理者さん') and model = 'Users'),(select id from acos where alias = 'Menu'),1,1,1,1);
+INSERT INTO aros_acos (aro_id,aco_id,_create,_read,_update,_delete) VALUES ((select id from aros where foreign_key in (select id from users where username = 'サブ管理者さん') and model = 'Users'),(select id from acos where alias = 'next'),'-1','-1','-1','-1');

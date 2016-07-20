@@ -27,16 +27,17 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->table('users');
-        $this->displayField('name');
+        $this->displayField('username');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Logins', [
-            'foreignKey' => 'login_id',
+        $this->addBehavior('Acl.Acl', ['type' => 'requester']);
+        $this->belongsTo('Groups', [
+            'className' => 'Groups',
+            'foreignKey' => 'group_id',
             'joinType' => 'INNER'
         ]);
-        $this->addBehavior('Acl.Acl', ['type' => 'requester']);
     }
 
     /**
@@ -56,9 +57,9 @@ class UsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('name', 'create')
-            ->notEmpty('name')
-            ->add('name', 'ruleName', [
+            ->requirePresence('username', 'create')
+            ->notEmpty('username')
+            ->add('username', 'ruleName', [
                 'rule' => ['alphaNumericCustom'],
                 'provider' => 'ProviderKey',
                 'message' => '名前は半角英数字で入力してください。']

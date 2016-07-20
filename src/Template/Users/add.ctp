@@ -12,6 +12,7 @@
         <legend><?= __('Add User') ?></legend>
         <?php
             echo $this->Form->input('username');
+            echo $this->Form->input('login_id',array('type'=>'text'));
             echo $this->Form->input('password');
             echo $this->Form->input('group_id');
         ?>
