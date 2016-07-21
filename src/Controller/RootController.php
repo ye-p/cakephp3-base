@@ -43,6 +43,7 @@ class RootController extends AppController
         parent::initialize();
 
         $this->session = $this->request->session();
+        $this->loadComponent('Log');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Csrf');
@@ -93,6 +94,10 @@ class RootController extends AppController
     {
         //ACLのチェックを行わない関数
         $this->Auth->allow(['login','logout']);
+        if($this->request->action != 'login'){
+            $user = $this->request->session()->read('Auth')['User'];
+            $this->Log->output($user,ACCESS_LOG);
+        }
     }
 
 }
