@@ -92,12 +92,8 @@ class RootController extends AppController
 
     public function beforeFilter(Event $event)
     {
-        //ACLのチェックを行わない関数
+        //設定した関数はACLのチェックを行わない
         $this->Auth->allow(['login','logout']);
-//        if($this->request->action != 'login'){
-//            $user = $this->request->session()->read('Auth')['User'];
-//            $this->Log->output($user,ACCESS_LOG);
-//        }
     }
 
     public function beforeRender(Event $event)
