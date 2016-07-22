@@ -16,7 +16,6 @@ class LogComponent extends Component
     }
 
     function output($data,$logType){
-
         $log = $this->getLogSetting($data,$logType);
         Log::info($log['message'], $log['file']);
     }
