@@ -9,21 +9,19 @@ use Cake\Mailer\Email;
 
 class MailComponent extends Component
 {
-    public $from = 'admin@co.jp';
-
     public function initialize(array $config) {
         $this->Controller = $this->_registry->getController();
     }
 
-    public function send($user)
+    public function send($user,$mailType)
     {
-        $mail = $this->getMailSetting();
+        $mail = $this->getMailSetting($mailType);
         $template = $mail['template'];
         $subject = $mail['subject'];
 
         $emailObj = $this->__makeEmailObj();
         $emailObj
-            ->from($this->from)
+            ->from(FROM_MAIL_ADDRESS)
             ->template($template)
             ->viewVars([
                 'user' => $user['username'],
@@ -33,11 +31,18 @@ class MailComponent extends Component
             ->send();
     }
 
-    public function getMailSetting(){
-        return $mail = [
+    public function getMailSetting($mailType){
+        $mail = [];
+        switch ($mailType) {
+            case SAMPLE_MAIL:
+                $mail = [
                     'template' => 'sample',
                     'subject' => 'テストメール',
                 ];
+                break;
+        }
+
+        return $mail;
     }
 
     public function __makeEmailObj()

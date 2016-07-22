@@ -62,7 +62,7 @@ class MenuController extends RootController
     }
 
     public function mail(){
-        $this->Mail->send($this->Auth->user());
+        $this->Mail->send($this->Auth->user(),SAMPLE_MAIL);
         $this->Flash->success('mail sent');
         $this->render('complete');
     }
