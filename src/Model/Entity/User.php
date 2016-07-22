@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use App\Auth\CustomPasswordHasher;
 
 /**
  * User Entity.
@@ -42,6 +43,11 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+
+    protected function _setPassword($password)
+    {
+        return (new CustomPasswordHasher)->hash($password);
+    }
 
     public function parentNode()
     {
