@@ -22,28 +22,25 @@ class LogComponent extends Component
 
     public function getLogSetting($data,$logType){
         $log = array();
+        $message = [
+            'id' => $data['id'],
+            'ip' => $this->getIp(),
+            'url' => (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+        ];
 
         switch ($logType) {
             case LOGIN_LOG:
-                $ip = $this->getIp();
-                $message = [
-                    'id' => $data['id'],
-                    'ip' => $ip,
-                ];
                 $log['message'] = $this->makeMessage($message);
                 $log['file'] = 'login';
                 break;
 
             case ACCESS_LOG:
-                $ip = $this->getIp();
                 $controller = $this->request->controller;
                 $action = $this->request->action;
-                $message = [
-                    'id' => $data['id'],
-                    'ip' => $ip,
+                $message = array_merge($message,[
                     'controller' => $controller,
                     'action' => $action,
-                ];
+                ]);
                 $log['message'] = $this->makeMessage($message);
                 $log['file'] = 'access';
                 break;
