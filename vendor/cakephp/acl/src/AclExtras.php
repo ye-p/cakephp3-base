@@ -57,7 +57,8 @@ class AclExtras
      *
      * @var string
      */
-    public $rootNode = 'controllers';
+    //public $rootNode = 'controllers';
+    public $rootNode = 'App';
 
     /**
      * Internal Clean Actions switch
