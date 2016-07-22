@@ -15,23 +15,23 @@ class LogComponent extends Component
         $this->Controller = $this->_registry->getController();
     }
 
-    function output($data,$log_type){
+    function output($data,$logType){
 
-        $log = $this->getLogSetting($data,$log_type);
+        $log = $this->getLogSetting($data,$logType);
         Log::info($log['message'], $log['file']);
     }
 
-    public function getLogSetting($data,$log_type){
+    public function getLogSetting($data,$logType){
         $log = array();
 
-        switch ($log_type) {
+        switch ($logType) {
             case LOGIN_LOG:
                 $ip = $this->getIp();
                 $message = [
                     'id' => $data['id'],
                     'ip' => $ip,
                 ];
-                $log['message'] = $this->makeMes($message);
+                $log['message'] = $this->makeMessage($message);
                 $log['file'] = 'login';
                 break;
 
@@ -45,7 +45,7 @@ class LogComponent extends Component
                     'controller' => $controller,
                     'action' => $action,
                 ];
-                $log['message'] = $this->makeMes($message);
+                $log['message'] = $this->makeMessage($message);
                 $log['file'] = 'access';
                 break;
         }
@@ -63,9 +63,9 @@ class LogComponent extends Component
         return $ip;
     }
 
-    public function makeMes($messge){
+    public function makeMessage($message){
         $ret = '';
-        foreach ($messge as $key => $val) {
+        foreach ($message as $key => $val) {
             $format = '%s=%s ';
             $ret .= sprintf($format, $key, $val);
         }

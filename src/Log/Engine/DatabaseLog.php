@@ -22,9 +22,9 @@ class DatabaseLog extends BaseLog
 
         $model = TableRegistry::get($this->_config['model']);
 
-        $message = $this->toArrayMes($message);
-            $controller = (isset($message['controller']))?$message['controller']:'Top';
-            $action = (isset($message['action']))?$message['action']:'login';
+        $message = $this->toArrayMessage($message);
+        $controller = (isset($message['controller']))?$message['controller']:'Top';
+        $action = (isset($message['action']))?$message['action']:'login';
         if(!empty($message['id'])){
             $entity = $model->newEntity([
                 'user_id' => $message['id'],
@@ -37,7 +37,7 @@ class DatabaseLog extends BaseLog
         }
     }
 
-    public function toArrayMes($message){
+    public function toArrayMessage($message){
         $ret = array();
         $message = explode(' ', $message);
         foreach ($message as $val) {
