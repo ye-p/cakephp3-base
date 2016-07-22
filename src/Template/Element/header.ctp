@@ -5,7 +5,6 @@
     <meta name="robots" content="noindex,nofollow" />
 
     <title>
-        <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
