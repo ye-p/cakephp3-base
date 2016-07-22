@@ -27,7 +27,11 @@ class LogComponent extends Component
         switch ($log_type) {
             case LOGIN_LOG:
                 $ip = $this->getIp();
-                $log['message'] = 'id='.$data['id'].' ip='.$ip;
+                $message = [
+                    'id' => $data['id'],
+                    'ip' => $ip,
+                ];
+                $log['message'] = $this->makeMes($message);
                 $log['file'] = 'login';
                 break;
 
@@ -35,7 +39,13 @@ class LogComponent extends Component
                 $ip = $this->getIp();
                 $controller = $this->request->controller;
                 $action = $this->request->action;
-                $log['message'] = 'id='.$data['id'].' ip='.$ip.' controller='.$controller.' action='.$action;
+                $message = [
+                    'id' => $data['id'],
+                    'ip' => $ip,
+                    'controller' => $controller,
+                    'action' => $action,
+                ];
+                $log['message'] = $this->makeMes($message);
                 $log['file'] = 'access';
                 break;
         }
@@ -51,5 +61,15 @@ class LogComponent extends Component
         }
 
         return $ip;
+    }
+
+    public function makeMes($messge){
+        $ret = '';
+        foreach ($messge as $key => $val) {
+            $format = '%s=%s ';
+            $ret .= sprintf($format, $key, $val);
+        }
+
+        return $ret;
     }
 }

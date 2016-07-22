@@ -228,7 +228,7 @@ return [
             //'port' => 'non_standard_port_number',
             'username' => 'root',
             'password' => 'root',
-            'database' => 'sample_db',
+            'database' => 'sample_db2',
             'encoding' => 'utf8',
             'timezone' => 'Asia/Tokyo',
             'flags' => [],
@@ -310,6 +310,11 @@ return [
             'file' => 'access',
             'levels' => [],
             'scopes' => ['access'],
+        ],
+        'database' => [
+            'className' => 'App\Log\Engine\DatabaseLog',
+            'model' => 'Logs',
+            'levels' => [],
         ],
     ],
 

@@ -1,22 +1,32 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS logs;
 
-CREATE TABLE users (
-    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    login_id CHAR(255) NOT NULL,
-    password CHAR(255) NOT NULL,
-    group_id INT(11) NOT NULL,
-    created DATETIME,
-    modified DATETIME
+CREATE TABLE `users` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(255) NOT NULL UNIQUE,
+    `login_id` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `group_id` INT(11) NOT NULL,
+    `created` DATETIME,
+    `modified` DATETIME
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE groups (
-    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    created DATETIME,
-    modified DATETIME
+CREATE TABLE `groups` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `created` DATETIME,
+    `modified` DATETIME
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `logs` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11),
+    `ip` VARCHAR(20),
+    `controller` VARCHAR(255),
+    `action` VARCHAR(255),
+    `created` DATETIME
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DELETE FROM users;
 DELETE FROM groups;

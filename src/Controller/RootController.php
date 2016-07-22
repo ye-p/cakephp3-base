@@ -94,10 +94,19 @@ class RootController extends AppController
     {
         //ACLのチェックを行わない関数
         $this->Auth->allow(['login','logout']);
+//        if($this->request->action != 'login'){
+//            $user = $this->request->session()->read('Auth')['User'];
+//            $this->Log->output($user,ACCESS_LOG);
+//        }
+    }
+
+    public function beforeRender(Event $event)
+    {
         if($this->request->action != 'login'){
             $user = $this->request->session()->read('Auth')['User'];
             $this->Log->output($user,ACCESS_LOG);
         }
     }
+
 
 }
