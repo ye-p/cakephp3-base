@@ -25,6 +25,7 @@ CREATE TABLE `logs` (
     `ip` VARCHAR(20),
     `controller` VARCHAR(255),
     `action` VARCHAR(255),
+    `url` VARCHAR(255),
     `created` DATETIME
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

@@ -25,12 +25,14 @@ class DatabaseLog extends BaseLog
         $message = $this->toArrayMessage($message);
         $controller = (isset($message['controller']))?$message['controller']:'Top';
         $action = (isset($message['action']))?$message['action']:'login';
+        $url = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         if(!empty($message['id'])){
             $entity = $model->newEntity([
                 'user_id' => $message['id'],
                 'ip' => $message['ip'],
                 'controller' => $controller,
                 'action' => $action,
+                'url' => $url,
                 'created' => date('Y-m-d H:i:s'),
             ]);
             $model->save($entity);
