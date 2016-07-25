@@ -9,7 +9,7 @@ class CustomPasswordHasher extends AbstractPasswordHasher
 {
     public function hash($password)
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        return password_hash($password, PASSWORD_DEFAULT, array('cost' => BLOWFISH_COST));
     }
 
     public function check($password, $hashedPassword)
