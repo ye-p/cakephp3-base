@@ -42,7 +42,7 @@ class TopController extends RootController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('ユーザー名かパスワードが間違えています');
+            $this->Flash->error('ユーザー名かパスワードを間違えています');
         }
     }
 }
