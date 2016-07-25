@@ -13,7 +13,7 @@ class MailComponent extends Component
         $this->Controller = $this->_registry->getController();
     }
 
-    public function send($user,$mailType)
+    public function send($user,$mailType = null)
     {
         $mail = $this->getMailSetting($mailType);
         $template = $mail['template'];
@@ -34,7 +34,7 @@ class MailComponent extends Component
     public function getMailSetting($mailType){
         $mail = [];
         switch ($mailType) {
-            case SAMPLE_MAIL:
+            default:
                 $mail = [
                     'template' => 'sample',
                     'subject' => 'テストメール',
