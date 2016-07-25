@@ -19,6 +19,7 @@ class DatabaseLog extends BaseLog
      */
     public function log($level, $message, array $context = [])
     {
+        if(!OUTPUT_DB_LOG) return;
 
         $model = TableRegistry::get($this->_config['model']);
 

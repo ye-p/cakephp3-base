@@ -38,7 +38,9 @@ class TopController extends RootController
         if($this->request->is('post')){
             $user = $this->Auth->identify();
             if($user){
-                $this->Log->output($user,LOGIN_LOG);
+                if(OUTPUT_FILE_LOG){
+                    $this->Log->output($user,LOGIN_LOG);
+                }
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }

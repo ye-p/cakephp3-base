@@ -98,7 +98,7 @@ class RootController extends AppController
 
     public function beforeRender(Event $event)
     {
-        if($this->request->action != 'login'){
+        if(OUTPUT_FILE_LOG && $this->request->action != 'login'){
             $user = $this->request->session()->read('Auth')['User'];
             $this->Log->output($user,ACCESS_LOG);
         }
